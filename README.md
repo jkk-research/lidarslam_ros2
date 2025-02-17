@@ -32,7 +32,7 @@ rosdep install --from-paths src --ignore-src -r -y
 ```
 build
 ```
-colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
+colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-select lidarslam lidarslam_msgs ndt_omp_ros2 graph_based_slam scanmatcher
 ```
 
 ## io
@@ -133,6 +133,10 @@ ros2 launch lidarslam lidarslam.launch.py
 
 ```
 ros2 bag play hdl_400/
+```
+
+```
+ros2 bag play /mnt/c/bag/slam_campus_thome01_lexus3_2025-02-07_13-52_0.mcap --clock --remap /tf:=/tf_devnull
 ```
 
 <img src="./lidarslam/images/path.png" width="640px">

@@ -18,7 +18,7 @@ def generate_launch_description():
         package='scanmatcher',
         executable='scanmatcher_node',
         parameters=[mapping_param_dir],
-        remappings=[('/input_cloud','/points_raw')],# Autoware
+        remappings=[('/input_cloud','/lexus3/os_center/points')],# Autoware
         output='screen'
         )
 
@@ -26,7 +26,25 @@ def generate_launch_description():
         package='tf2_ros',
         executable='static_transform_publisher',
         arguments=['1.2','0','2.0','0','0','0','1','base_link','velodyne']
-        )
+    )
+
+    tf_a = launch_ros.actions.Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='center1_os_front_tf_publisher',
+        output='screen',
+        arguments=[
+            '--x',     '0.75',
+            '--y',     '0.0',
+            '--z',     '1.91',
+            '--yaw',   '0.0',
+            '--pitch', '0.0',
+            '--roll',  '0.0',
+
+            '--frame-id',       'base_link',
+            '--child-frame-id', 'lexus3/os_center_a_laser_data_frame'
+        ],
+    )
 
     return launch.LaunchDescription([
         launch.actions.DeclareLaunchArgument(
@@ -34,5 +52,5 @@ def generate_launch_description():
             default_value=mapping_param_dir,
             description='Full path to mapping parameter file to load'),
         mapping,
-        tf
+        tf_a
             ])
